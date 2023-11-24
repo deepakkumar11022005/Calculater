@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+        integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/e6a2fb518f.js" crossorigin="anonymous"></script>
+
+    <title>My calculater</title>
+    <style>
+        * {
+            margin: 0%;
+            box-sizing: border-box;
+            padding: 0%;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .main-container {
+            height: 100vh;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: black;
+            margin-top: 1rem;
+            border-radius: 35px;
+            padding: 1.5rem 2rem;
+        }
+
+        .calci_head {
+            color: white;
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 500;
+            height: 8vh;
+            /* background-color: bisque; */
+        }
+
+        .unit_converters:hover {
+            color: aqua;
+            border-bottom: 2px solid aqua;
+            height: 60%;
+        }
+
+        .unit_converters {
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .result_box {
+            width: 100%;
+            height: 25vh;
+            /* background-color: antiquewhite; */
+        }
+
+        .history_icons {
+            height: 7vh;
+            /* background-color: antiquewhite; */
+            width: 100%;
+        }
+
+        .dailpad {
+            color: white;
+            height: 50vh;
+            /* background-color: brown; */
+            font-size: 20px;
+            /* overflow: hidden; */
+            display: grid;
+            grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+
+        }
+
+        .first_row,
+        .second_row,
+        .third_row,
+        .fourth_row,
+        .fivth_row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            text-align: center;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        .divider,
+        .mutiple,
+        .subraction,
+        .addition,
+        .equal_to {
+            color: aqua;
+            font-size: 29px;
+            font-weight: 900;
+        }
+
+        .math {
+            height: auto;
+            /* width: 50px; */
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 50%;
+            margin-top: auto;
+            margin-bottom: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .math:hover,
+        .add_math:hover {
+            /* transition: 0.4s; */
+            background-color: rgba(186, 247, 226, 0.1);
+        }
+
+        .add_math {
+            border-radius: 50%;
+            font-size: 12px;
+            padding: 4px;
+        }
+
+        .given_input {
+            height: 30%;
+            width: 100%;
+            /* background-color: rgb(200, 220, 220);1122 */
+            text-align: end;
+            color: white;
+            overflow: calc();
+            font-size: 29px;
+        }
+
+        .output {
+            height: 30%;
+            /* background-color: aqua; */
+            text-align: end;
+            padding-left: 20px;
+            color: rgb(179, 173, 173);
+            position: relative;
+            top: 8px;
+            font-size: 21px;
+
+
+        }
+
+        .result_box {
+            width: 90%;
+            position: relative;
+            height: 25%;
+            top: 25px;
+            /* margin-left: -25px; */
+        }
+
+        .history_icons {
+            width: 25%;
+            display: flex;
+            justify-content: space-around;
+            color: white;
+            margin-left: 5%;
+            height: 5vh;
+            /* background-color: antiquewhite; */
+        }
+
+        .zero_row {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .additional_mathoperations_hidden {
+            display: grid;
+            font-size: 15px;
+            display: none;
+            grid-gap: 5px;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        }
+
+        .zero_row {
+            color: white;
+        }
+
+        .history,
+        .screen {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-3 main-container">
+                    <div class="calci_head">
+                        <div class="unit_converters">Calculater</div>
+                        <div class="unit_converters">Exchange Rate</div>
+                        <div class="unit_converters">Unit converter</div>
+                    </div>
+                    <div class="result_box">
+                        <div class="given_input" id="given_input_id"></div>
+                        <div class="output" id="output_id"></div>
+                    </div>
+                    <div class="history_icons">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-clock history" viewBox="0 0 16 16">
+                                <path
+                                    d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z" />
+                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-app-indicator screen" viewBox="0 0 16 16">
+                                <path
+                                    d="M5.5 2A3.5 3.5 0 0 0 2 5.5v5A3.5 3.5 0 0 0 5.5 14h5a3.5 3.5 0 0 0 3.5-3.5V8a.5.5 0 0 1 1 0v2.5a4.5 4.5 0 0 1-4.5 4.5h-5A4.5 4.5 0 0 1 1 10.5v-5A4.5 4.5 0 0 1 5.5 1H8a.5.5 0 0 1 0 1H5.5z" />
+                                <path d="M16 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div class="zero_row"> <span id="addmathopp_id">=</span>
+                            <div class="additional_mathoperations_hidden" id="mathop_id">
+                                <div class="add_math" id="sin_id">sin</div>
+                                <div class="add_math" id="cos_id">cos</div>
+                                <div class="add_math" id="tan_id">tan</div>
+                                <div class="add_math" id="log_id">log</div>
+                                <div class="add_math" id="In_id">In</div>
+                                <div class="add_math" id="openbracket_id">(</div>
+                                <div class="add_math" id="closebracket_id">)</div>
+                                <div class="add_math" id="sqrt_id">&Sqrt;</div>
+                                <div class="add_math" id="xor_id">^</div>
+                                <div class="add_math" id="exclamatory_id">!</div>
+                                <div class="add_math" id="pi_id">&pi;</div>
+                                <div class="add_math" id="e_id">e</div>
+                                <div class="add_math" id="inverse_id">INV</div>
+                                <div class="add_math">RAD</div>
+                                <div class="add_math">DEG</div>
+                            </div>
+                        </div>
+                        <div class="dailpad" id="dailpad_id">
+
+                            <div class="first_row">
+                                <div class="clear math" id="clearinput_id">C</div>
+                                <div class="percentage math" id="modulus_id">%</div>
+                                <div class="delete_one math" id="pop_id">$</div>
+                                <div class="divider math" id="divide_id">&div;</div>
+                            </div>
+                            <div class="second_row">
+                                <div class="seven math" id="seven_id">7</div>
+                                <div class="eight math" id="eight_id">8</div>
+                                <div class="nine math" id="nine_id">9</div>
+                                <div class="mutiple math" id="mutiple_id"> &times;</div>
+                            </div>
+                            <div class="third_row">
+                                <div class="four math" id="four_id">4</div>
+                                <div class="five math" id="five_id">5</div>
+                                <div class="six math" id="six_id">6</div>
+                                <div class="subraction math" id="subraction_id">&minus;</div>
+                            </div>
+                            <div class="fourth_row">
+                                <div class="one math" id="one_id">1</div>
+                                <div class="two math" id="two_id">2</div>
+                                <div class="three math" id="three_id">3</div>
+                                <div class="addition math" id="addition_id">&plus;</div>
+                            </div>
+                            <div class="fivth_row">
+                                <div class="double_zero math" id="doublezero_id">00</div>
+                                <div class="single_zero math" id="singlezero_id">0</div>
+                                <div class="precision math" id="precision_id">.</div>
+                                <div class="equal_to math" id="equalto_id">&equals;</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        let str = ''
+        document.addEventListener("keyup", (event) => {
+            // console.log(event.key);
+            if (event.key == 1) {
+                fun_one()
+            }
+            else if (event.key == 2) {
+                fun_two()
+            }
+            else if (event.key == 3) {
+                fun_three()
+            }
+            else if (event.key == 4) {
+                fun_four()
+            }
+            else if (event.key == 5) {
+                fun_five()
+            }
+            else if (event.key == 6) {
+                fun_six()
+            }
+            else if (event.key == 7) {
+                fun_seven()
+            }
+            else if (event.key == 8) {
+                fun_eight()
+            }
+            else if (event.key == 9) {
+                fun_nine()
+            }
+            else if (event.key == 0) {
+                fun_zero()
+            }
+            else if (event.key == 'o') {
+                fun_zerozero()
+            }
+            else if (event.key == '+') {
+                fun_add()
+            }
+            else if (event.key == '-') {
+                fun_sub()
+            }
+            else if (event.key == '*') {
+                fun_mul()
+            }
+            else if (event.key == '/') {
+                fun_div()
+            }
+            else if (event.key == '%') {
+                fun_mod()
+            }
+            else if (event.key == 'Enter') {
+                fun_equal()
+            } else if (event.key == '.') {
+                fun_dot()
+            }
+
+            else if (event.key == '=') {
+                fun_equal()
+            }
+            else if (event.key == 'Delete') {
+                fun_clear()
+            }
+            else if (event.key == 'S' || event.key == 's') {
+                str += "sin("
+                document.getElementById("given_input_id").style.color = "white"
+                document.getElementById("given_input_id").innerHTML = str
+                document.getElementById("output_id").innerHTML = eval(str)
+            }
+            else if (event.key == "Backspace") {
+                fun_pop();
+            }
+            else if (event.key == ')') {
+                str += ')'
+                document.getElementById("given_input_id").style.color = "white"
+                document.getElementById("given_input_id").innerHTML = str
+                document.getElementById("output_id").innerHTML = eval(str)
+            }
+
+
+
+        })
+        let addmath = 0
+        document.getElementById("addmathopp_id").addEventListener("click", () => {
+            if (addmath == 0) {
+                addmath = 1
+                document.getElementById("mathop_id").style.display = "grid"
+                document.getElementById("dailpad_id").style.height = 'auto'
+            }
+            else {
+                document.getElementById("dailpad_id").style.height = '50vh'
+                document.getElementById("mathop_id").style.display = "none"
+                addmath = 0
+            }
+        })
+        document.getElementById("pop_id").addEventListener("click", fun_pop)
+        function fun_pop() {
+            if (str.length == 1) {
+                str = ''
+                document.getElementById("given_input_id").style.color = "white"
+                document.getElementById("given_input_id").innerHTML = ''
+                document.getElementById("output_id").innerHTML = ''
+
+            }
+            else {
+                str = str.slice(0, str.length - 1);
+                document.getElementById("given_input_id").style.color = "white"
+                document.getElementById("given_input_id").innerHTML = str
+                document.getElementById("output_id").innerHTML = eval(str)
+            }
+        }
+        let one = document.getElementById("one_id")
+        one.addEventListener('click', fun_one)
+        function fun_one() {
+            str = str + 1
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+        document.getElementById("")
+        document.getElementById("sin_id").addEventListener("click", () => {
+            str = str + 'sin'
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        })
+
+
+
+
+        document.getElementById("cos_id").addEventListener("click", () => {
+            str = str + 'cos'
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        })
+
+        document.getElementById("tan_id").addEventListener("click", () => {
+            str = str + 'tan'
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        })
+
+
+        document.getElementById("openbracket_id").addEventListener("click", () => {
+            str = str + '('
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        })
+        document.getElementById("closebracket_id").addEventListener("click", () => {
+            str = str + ')'
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        })
+
+        document.getElementById("log_id").addEventListener("click", () => {
+            str = str + 'log'
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        })
+
+        let two = document.getElementById("two_id")
+        two.addEventListener('click', fun_two)
+        function fun_two() {
+            str = str + 2
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+
+
+        let three = document.getElementById("three_id")
+        three.addEventListener('click', fun_three)
+        function fun_three() {
+            str = str + 3
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+
+        let four = document.getElementById("four_id")
+        four.addEventListener('click', fun_four)
+        function fun_four() {
+            str = str + 4
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+
+        let five = document.getElementById("five_id")
+        five.addEventListener('click', fun_five)
+        function fun_five() {
+            str = str + 5
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+
+
+        let six = document.getElementById("six_id")
+        six.addEventListener('click', fun_six)
+        function fun_six() {
+            str = str + 6
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+
+
+        let seven = document.getElementById("seven_id")
+        seven.addEventListener('click', fun_seven)
+        function fun_seven() {
+            str = str + 7
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+
+
+        let eight = document.getElementById("eight_id")
+        eight.addEventListener('click', fun_eight)
+        function fun_eight() {
+            str = str + 8
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+
+
+        let nine = document.getElementById("nine_id")
+        nine.addEventListener('click', fun_nine)
+        function fun_nine() {
+            str = str + 9
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+
+        let zero = document.getElementById("singlezero_id")
+        zero.addEventListener('click', fun_zero)
+        function fun_zero() {
+            str = str + '0'
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+
+
+        let zerozero = document.getElementById("doublezero_id")
+        zerozero.addEventListener('click', fun_zerozero)
+        function fun_zerozero() {
+            str = str + '00'
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+
+        }
+
+
+        let addition = document.getElementById("addition_id")
+        addition.addEventListener('click', fun_add)
+        function fun_add() {
+            str = str + ' + '
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+
+        let subraction = document.getElementById("subraction_id")
+        subraction.addEventListener('click', fun_sub)
+        function fun_sub() {
+            str = str + ' - '
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+
+        let divide = document.getElementById("divide_id")
+        divide.addEventListener('click', fun_div)
+        function fun_div() {
+            if (str == 0) {
+                return 0
+            }
+            str = str + ' / '
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+        let mutiple = document.getElementById("mutiple_id")
+        mutiple.addEventListener('click', fun_mul)
+        function fun_mul() {
+            if (str == 0) {
+                return 0
+            }
+            str = str + ' * '
+
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+
+        let modulus = document.getElementById("modulus_id")
+        modulus.addEventListener('click', fun_mod)
+        function fun_mod() {
+            if (str == 0) {
+                return 0
+            }
+            str = str + ' % '
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+
+
+        let precision = document.getElementById("precision_id")
+        precision.addEventListener('click', fun_dot)
+        function fun_dot() {
+            if (str.length == 0) {
+                str += '0.'
+            }
+            else {
+                str = str + ' . '
+            }
+            console.log(str)
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = eval(str)
+        }
+
+
+        let equal_to = document.getElementById("equalto_id")
+        equal_to.addEventListener('click', fun_equal)
+        function fun_equal() {
+            if (str == 0) {
+                return 0
+            }
+
+            if (str[str.length - 2] == '+' || str[str.length - 2] == '-' || str[str.length - 2] == '/' || str[str.length - 2] == '%' || str[str.length - 2] == '-' || str[str.length - 2] == '*') {
+                document.getElementById("output_id").style.color = "white"
+                document.getElementById("output_id").innerHTML = eval(str.slice(0, str.length - 3))
+                document.getElementById("given_input_id").style.color = "black"
+                str = ''
+            }
+            else {
+                document.getElementById("output_id").style.color = "white"
+                document.getElementById("output_id").innerHTML = eval(str)
+                document.getElementById("given_input_id").style.color = "black"
+                str = ''
+            }
+        }
+
+        let clearinput = document.getElementById("clearinput_id")
+        clearinput.addEventListener('click', fun_clear)
+        function fun_clear() {
+            str = ''
+            document.getElementById("given_input_id").style.color = "white"
+            document.getElementById("given_input_id").innerHTML = str
+            document.getElementById("output_id").innerHTML = ''
+        }
+    </script>
+</body>
+
+</html>
